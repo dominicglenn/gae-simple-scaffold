@@ -1,0 +1,27 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+default_expiration: "1s"
+
+handlers:
+- url: /_ah/queue/deferred
+  script: google.appengine.ext.deferred.deferred.application
+  login: admin
+
+- url: /.*
+  script: app.main.app
+  secure: always
+
+builtins:
+- deferred: on
+
+libraries:
+- name: django
+  version: "1.11"
+
+- name: jinja2
+  version: "2.6"
+
+- name: webapp2
+  version: "2.5.2"
