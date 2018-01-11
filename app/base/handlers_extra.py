@@ -127,4 +127,4 @@ class AuthenticatedHandler(handlers.BaseHandler, XSRFTokenValidationMixin):
             'user_email': user.email() if user else None
         }
 
-        self.render('unauthenticated.tpl', context)
+        self.render('unauthenticated.html', context)
