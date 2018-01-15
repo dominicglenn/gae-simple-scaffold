@@ -29,7 +29,6 @@ from common import utility
 import models
 import xsrf
 from base import jinja2_utils
-from base import http2push
 
 from google.appengine.api import memcache
 from google.appengine.api import users
@@ -162,8 +161,7 @@ class _HandlerMeta(abc.ABCMeta):
         return super(_HandlerMeta, mcs).__new__(mcs, name, bases, dct)
 
 
-class BaseHandler(
-        http2push.PushHandler, webapp2.RequestHandler):
+class BaseHandler(webapp2.RequestHandler):
     """Base handler for servicing unauthenticated user requests."""
 
     __metaclass__ = _HandlerMeta
