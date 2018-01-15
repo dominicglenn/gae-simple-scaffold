@@ -23,6 +23,7 @@ import logging
 import pickle
 import yaml
 import datetime
+import inspect
 
 from babel import numbers as babel_numbers
 from babel import localedata as babel_localedata
@@ -39,12 +40,8 @@ class ApiSecurityException(Exception):
 
 
 def FindArgumentIndex(function, argument):
-    args = function.func_code.co_varnames[:function.func_code.co_argcount]
-    try:
-        return args.index(argument)
-    except ValueError, e:
-        print(e, type(args), argument), dir(args)
-        raise
+    _args = inspect.getargspec(function).args
+    return _args.index(argument)
 
 
 def GetDefaultArgument(function, argument):
@@ -185,9 +182,6 @@ def _HttpUrlLoggingWrapper(func):
             logging.warn('SECURITY : fetching non-HTTPS url %s' % (arg_value))
         return func(*args, **kwargs)
     return _CheckAndLog
-
-urlfetch.fetch = _HttpUrlLoggingWrapper(urlfetch.fetch)
-urlfetch.make_fetch_call = _HttpUrlLoggingWrapper(urlfetch.make_fetch_call)
 
 # webapp2_extras session does not set HttpOnly/Secure by default.
 sessions.default_config['cookie_args']['secure'] = (not
