@@ -14,6 +14,7 @@ from urllib import urlopen
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
+ENV_PIP = 'env/bin/pip'
 TARGET_DIR = os.path.join(PROJECT_DIR, 'site-packages')
 
 DEV_TARGET_DIR = os.path.join(TARGET_DIR, 'dev')
@@ -124,7 +125,7 @@ def _clear_dependencies(target_dir):
 
 def _install_dependencies(requirements_file, target_dir):
     _execute_args(
-        'pip',
+        ENV_PIP,
         'install',
         '--no-deps',
         '-r', requirements_file,
@@ -144,7 +145,7 @@ if __name__ == '__main__':
     )
 
     parser.add_argument(
-        '--frankenserver',
+        '--google-appengine',
         action='store_true',
     )
 
@@ -159,11 +160,11 @@ if __name__ == '__main__':
         os.path.exists(APPENGINE_TARGET_DIR)
         or os.path.exists(FRANKENSERVER_TARGET_DIR)
     ):
-        if arguments.frankenserver:
-            _install_frankenserver()
+        if arguments.google_appengine:
+            _install_appengine_sdk()
 
         else:
-            _install_appengine_sdk()
+            _install_frankenserver()
 
     elif arguments.clear:
         print('Clearing dependencies...')

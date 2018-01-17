@@ -6,6 +6,12 @@ watch/update.
 
 
 ```
-./run.sh install --frankenserver
+./run.sh install
 ./run.sh start
+```
+
+
+For google appengine instead of frankenserver:
+```
+./run.sh install --google-appengine
 ```
